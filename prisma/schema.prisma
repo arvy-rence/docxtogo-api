@@ -57,6 +57,9 @@ model Section {
   section_name    String?   @unique @db.VarChar
   adviser_name    String?   @db.VarChar
   room_assignment String?   @db.VarChar
+  grade_level     Int?      @default(11)
+  strand_id       Int?      @default(1)
+  strand          Strand?   @relation(fields: [strand_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   student         Student[]
 
   @@map("section")
@@ -75,6 +78,7 @@ model Strand {
   id          Int       @id @default(autoincrement())
   strand_name String?
   created_at  DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  section     Section[]
   student     Student[]
 
   @@map("strand")
