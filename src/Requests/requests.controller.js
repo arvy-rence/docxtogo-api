@@ -6,7 +6,7 @@ export const getAllRequests = async (req, res) => {
   const requests = await requestService.getAllRequests()
 
   res.status(200).json({
-      requests
+    requests
   })
 }
 
@@ -14,7 +14,7 @@ export const getCountByStatus = async (req, res) => {
   const requests = await requestService.getCountByStatus()
 
   res.status(200).json({
-      requests
+    requests
   })
 }
 
@@ -22,7 +22,7 @@ export const getRequestsForDashboard = async (req, res) => {
   const requests = await requestService.getRequestsForDashboard()
 
   res.status(200).json({
-      requests
+    requests
   })
 }
 
