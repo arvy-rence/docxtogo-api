@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id            Int       @id @default(autoincrement())
+  username      String    @db.VarChar
+  password      String    @db.VarChar
+  created_at    DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  is_superadmin Boolean   @default(true)
+
+  @@map("admin")
+}
+
+model DocumentType {
+  id            Int       @id @default(autoincrement())
+  document_name String?   @db.VarChar
+  created_at    DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  request       Request[]
+
+  @@map("document_type")
+}
+
+model Logs {
+  id         Int       @id @default(autoincrement())
+  agent      String?   @db.VarChar
+  message    String?
+  created_at DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+
+  @@map("logs")
+}
+
+model Request {
+  id                 Int           @id @default(autoincrement())
+  lrn                String?       @db.VarChar
+  status_id          Int?
+  contact_number     String?       @db.VarChar
+  date_requested     DateTime?     @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  date_updated       DateTime?     @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  document_requested Int?
+  purpose            String?
+  document_type      DocumentType? @relation(fields: [document_requested], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  student            Student?      @relation(fields: [lrn], references: [lrn], onDelete: NoAction, onUpdate: NoAction)
+  status             Status?       @relation(fields: [status_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("request")
+}
+
+model Section {
+  id              Int       @id @default(autoincrement())
+  created_at      DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  section_name    String?   @unique @db.VarChar
+  adviser_name    String?   @db.VarChar
+  room_assignment String?   @db.VarChar
+  student         Student[]
+
+  @@map("section")
+}
+
+model Status {
+  id          Int       @id(map: "request_type_pkey") @default(autoincrement())
+  status_name String?   @db.VarChar
+  created_at  DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  request     Request[]
+
+  @@map("status")
+}
+
+model Strand {
+  id          Int       @id @default(autoincrement())
+  strand_name String?
+  created_at  DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  student     Student[]
+
+  @@map("strand")
+}
+
+model Student {
+  id         Int       @id @default(autoincrement())
+  lrn        String?   @unique @db.VarChar
+  full_name  String?
+  gender     String?   @default("M") @db.VarChar
+  birthday   DateTime? @db.Date
+  status     Boolean?  @default(true)
+  created_at DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc-8'::text)")) @db.Timestamptz(6)
+  section_id Int
+  strand_id  Int
+  request    Request[]
+  section    Section   @relation(fields: [section_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  strand     Strand    @relation(fields: [strand_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("student")
+}
