@@ -17,3 +17,23 @@ export const getCountByStatus = async (req, res) => {
       requests
   })
 }
+
+export const getRequestsForDashboard = async (req, res) => {
+  const requests = await requestService.getRequestsForDashboard()
+
+  res.status(200).json({
+      requests
+  })
+}
+
+export const updateRequestStatus = async (req, res) => {
+  const id = parseInt(req.params.id)
+
+  const {status} = req.body
+
+  await requestService.updateRequestStatus(id, status)
+
+  res.status(200).json({
+    message: "Updated request status successfully"
+  })
+}
