@@ -15,10 +15,10 @@
     "@prisma/client": "^4.8.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "prisma": "^4.8.0"
+    "prisma": "^4.8.0",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
-    "moment": "^2.29.4",
     "nodemon": "^2.0.20"
   }
 }
