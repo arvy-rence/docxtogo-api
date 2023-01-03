@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  createRequest,
   getAllRequests,
   getCountByStatus,
   getRequestsByLRN,
@@ -24,6 +25,7 @@ router.get('/', getAllRequests)
 router.get('/count', getCountByStatus)
 router.get('/dashboard', getRequestsForDashboard)
 router.get('/:lrn', getRequestsByLRN)
+router.post('/create', createRequest)
 router.patch('/:id', updateRequestStatus)
 
 export {router as requestRoutes}

@@ -47,3 +47,14 @@ export const updateRequestStatus = async (req, res) => {
     message: "Updated request status successfully"
   })
 }
+
+export const createRequest = async (req, res) => {
+  const {purpose, contact, document, lrn} = req.body
+
+  const request = await requestService.createRequest(purpose, contact, document, lrn)
+
+  res.status(200).json({
+    message: "Created request successfully",
+    request
+  })
+}

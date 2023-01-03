@@ -224,4 +224,22 @@ export class RequestService {
 
     await disconnect()
   }
+
+  async createRequest(purpose, contact, document, lrn) {
+    await connect()
+
+    await client.Request.create({
+      data: {
+        purpose: purpose,
+        contact_number: contact,
+        lrn: lrn,
+        document_requested: document,
+        status_id: 1,
+        date_requested: new Date(generateDate()),
+        date_updated: new Date(generateDate())
+      }
+    })
+
+    await disconnect()
+  }
 }
