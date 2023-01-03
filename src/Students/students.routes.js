@@ -1,4 +1,5 @@
 import express from "express";
+import {getStudentByLRN, getStudentsBySection} from "./students.controller.js";
 
 const router = express.Router();
 
@@ -10,7 +11,12 @@ const router = express.Router();
  * router.get('/') - all students
  * router.get('/:lrn') - student by lrn
  * router.put('/:lrn') - update student
- * router.get('/get/:section') - all students in a section
+ * router.get('/get/:id') - all students in a section
  * router.post('/create') - create a student
  *
  */
+
+router.get('/:lrn', getStudentByLRN);
+router.get('/get/:sectionId', getStudentsBySection)
+
+export {router as studentRoutes};

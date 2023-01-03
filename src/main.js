@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import {requestRoutes} from "./Requests/requests.routes.js";
 import {sectionRoutes} from "./Sections/sections.routes.js";
+import {studentRoutes} from "./Students/students.routes.js";
 
 // app routes
 
@@ -20,3 +21,4 @@ app.get('/api', (req, res) => {
 
 app.use('/api/request', requestRoutes)
 app.use('/api/section', sectionRoutes)
+app.use('/api/student', studentRoutes)
