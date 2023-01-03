@@ -1,5 +1,11 @@
 import express from "express";
-import {getAllRequests, getCountByStatus, getRequestsForDashboard, updateRequestStatus} from "./requests.controller.js";
+import {
+  getAllRequests,
+  getCountByStatus,
+  getRequestsByLRN,
+  getRequestsForDashboard,
+  updateRequestStatus
+} from "./requests.controller.js";
 
 const router = express.Router();
 
@@ -17,6 +23,7 @@ const router = express.Router();
 router.get('/', getAllRequests)
 router.get('/count', getCountByStatus)
 router.get('/dashboard', getRequestsForDashboard)
+router.get('/:lrn', getRequestsByLRN)
 router.patch('/:id', updateRequestStatus)
 
 export {router as requestRoutes}

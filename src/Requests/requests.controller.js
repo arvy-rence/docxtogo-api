@@ -26,6 +26,16 @@ export const getRequestsForDashboard = async (req, res) => {
   })
 }
 
+export const getRequestsByLRN = async (req, res) => {
+  const lrn = req.params.lrn
+
+  const requests = await requestService.getRequestsByLRN(lrn)
+
+  res.status(200).json({
+    requests
+  })
+}
+
 export const updateRequestStatus = async (req, res) => {
   const id = parseInt(req.params.id)
 

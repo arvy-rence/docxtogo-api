@@ -61,6 +61,58 @@ export class RequestService {
     return allRequests
   }
 
+  async getRequestsByLRN(lrn) {
+    await connect()
+
+    const allRequests = []
+
+    const requests = await client.Request.findMany({
+      where: {
+        lrn: lrn
+      },
+      select: {
+        id: true,
+        purpose: true,
+        contact_number: true,
+        status: {
+          select: {
+            id: true,
+            status_name: true
+          }
+        },
+        document_type: {
+          select: {
+            id: true,
+            document_name: true
+          }
+        },
+        date_requested: true,
+        date_updated: true,
+      },
+      orderBy: {
+        date_requested: 'desc'
+      }
+    })
+
+    requests.forEach(request => {
+      const requestObj = {
+        id: request.id,
+        purpose: request.purpose,
+        contact: request.contact_number,
+        status: request.status.id,
+        document: request.document_type.document_name,
+        dateRequested: request.date_requested,
+        timeLog: request.date_updated
+      }
+
+      allRequests.push(requestObj)
+    })
+
+    await disconnect()
+
+    return allRequests
+  }
+
   async getCountByStatus() {
     await connect()
 
