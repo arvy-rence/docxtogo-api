@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DiscordProjectSettings">
+    <option name="show" value="PROJECT_FILES" />
+    <option name="nameOverrideEnabled" value="true" />
+    <option name="nameOverrideText" value="DocsToGo Server" />
+    <option name="description" value="Serves the data needed by the DocsToGo Admin and User App" />
+  </component>
+</project>
